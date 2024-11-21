@@ -42,21 +42,15 @@ def find_salt_md5_digits(
 
 def dehashe(
     file_path_input: str='hashed_data.txt',
-    file_path_output:str='dehashed_without_salt.txt',
+    file_path_output:str='dehashed_with_salt.txt',
     optimized:bool=True,
-    shut_up:bool=True
 ): 
     if optimized:
         optimization = '-O --opencl-device-types 1'
     else:
         optimization =  ''
 
-    if shut_up:
-        stdout = '> /dev/null'
-    else:
-        stdout = ''
-
-    os.system(f"hashcat -a 3 -m 0 {optimization} {file_path_input} --outfile {file_path_output} '89?d?d?d?d?d?d?d?d?d' {stdout}")
+    os.system(f"hashcat -a 3 -m 0 {optimization} {file_path_input} --outfile {file_path_output} --show '89?d?d?d?d?d?d?d?d?d'")
 
 def main():
     dehashe()
